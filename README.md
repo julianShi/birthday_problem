@@ -1,7 +1,20 @@
 # Problem
 There are M members in a group. The birthday of a member is uniformly random in a year. The group celebrates if there is at least one member who is on birthday at a day. Then, how many days in average does the group celebrate in a year? 
 
-# Solution
+# Analytical Solution
+For any given day in a year, the probability that it's not the birthday of the first person is `p(1)=364/365`. 
+Given that the probability that this day is not the birthday of the second person is indipendent from the probability of the first person. The chance it's not a birthday in a group of two is `p(2) = p(1)^2`. 
+Therefore, in a group of `M` people, the chance it's not a birthday is 
+```
+p(M) = p(1)^M = (364/365)^M
+```
+There are 365 such days in a year. So in average, there are `365*(364/365)^M` non-birthdays in a group of M people. 
+
+The following is the plot of average birthdays in a year against number of members
+
+![Birthdays against number of members](birthdays.png)
+
+# Numerical Solution
 ## Probability analysis
 The average day can be calculated by 
 ```
