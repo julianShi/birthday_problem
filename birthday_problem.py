@@ -14,6 +14,14 @@ def binomial(n,k,cache):
     cache[n][k]= binomial(n-1,k,cache)+binomial(n-1,k-1,cache)
     return cache[n][k]
 
+def divide(numerator,denominator):
+    # Return approximate solution
+    lenN=len(str(numerator))
+    lenD=len(str(denominator))
+    proximateN=numerator/(10**(lenN-10))
+    proximateD=denominator/(10**(lenD-10))
+    return float(proximateN)/float(proximateD)*(10**(lenN-lenD))
+
 def average_birthdays(DAYS,PEOPLE):
     # DAYS denotes the number of days in a year
     # PEOPLE denotes the number of members in the group
@@ -28,13 +36,14 @@ def average_birthdays(DAYS,PEOPLE):
             permutations[n][k]=permutations[k][k]*binomial(n,k,cache)
             permutations[n][n]-=permutations[n][k]
 
+    denominator=DAYS**PEOPLE
+    probabilities = [ divide(perm,denominator) for perm in permutations[DAYS]]
     # Calculate the average days by weight
-    average_days = 0
-    for average_days in range(1,DAYS+1):
-        average_days+=k*permutations[DAYS][k]
+    average_days=0
+    for k in range(1,DAYS+1):
+        average_days+=k*probabilities[k]
     return average_days
 
 PEOPLE=365 
 DAYS=365 
 print(average_birthdays(DAYS,PEOPLE))
-# To conitnue, calculate average_days/(DAYS**PEOPLE) ON https://www.dcode.fr/big-numbers-division to get the average number of birthdays in a group
